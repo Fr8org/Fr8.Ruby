@@ -6,6 +6,7 @@ Ruby Code uses https://github.com/bbatsov/ruby-style-guide as its style guide, c
 
 # Installation
 
+- Rails `gem install rails`
 - Bundler `gem install bundler`
 - Install GEMs with Bundler `terminalTrello$: bundle`
 
