@@ -7,7 +7,7 @@ Ruby Code uses https://github.com/bbatsov/ruby-style-guide as its style guide, c
 # Installation
 
 - Rails `gem install rails`
-- Bundler `gem install bundler`
+- Bundler `gem install bundler --version '1.11.2'` (v 1.11.2 is the one currently being used by Heroku)
 - Install GEMs with Bundler `bundle`
 - Initiate the DB `rake db:create`
 
