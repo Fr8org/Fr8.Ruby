@@ -8,10 +8,12 @@ Ruby Code uses https://github.com/bbatsov/ruby-style-guide as its style guide, c
 
 - Rails `gem install rails`
 - Bundler `gem install bundler`
-- Install GEMs with Bundler `terminalTrello$: bundle`
+- Install GEMs with Bundler `bundle`
+- Initiate the DB `rake db:create`
 
 ## Requirements
 
 ### OSX
 - RVM `\curl -sSL https://get.rvm.io | bash -s stable --ruby`
 - Homebrew `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+- PostgreSQL `brew install postgresql`
