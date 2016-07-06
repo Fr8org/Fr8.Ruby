@@ -10,6 +10,7 @@ module Fr8
       ManifestType::STANDARD_PAYLOAD_DATA =>
         StandardPayloadDataCM
     }.freeze
+
     def extract_manifest(manifest_id:, fr8_json:)
       MANIFEST_CM[manifest_id].try(:from_fr8_json, fr8_json)
     end
