@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Fr8
   # TODO: Document
   class Hub < PropertyInitializer
@@ -9,5 +10,7 @@ module Fr8
     )
       super(method(__method__).parameters)
     end
+
+    def self.create_default_hub; end
   end
 end
