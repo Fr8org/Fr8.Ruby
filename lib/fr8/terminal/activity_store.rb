@@ -3,10 +3,14 @@ module Fr8
   module Terminal
     # TODO: Document
     class ActivityStore
-      attr_accessor :activity_templates, :activity_handlers
+      attr_accessor :activity_templates, :activity_handlers, :str
 
       def initialize(activity_templates: {}, activity_handlers: {})
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
 
       def register_activity(activity_template:, activity_handler:)

@@ -10,7 +10,12 @@ module Fr8
         manifest_type:, label:, filter_by_tag:, request_upstream:,
         availability_type:
       )
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
+
       end
     end
   end

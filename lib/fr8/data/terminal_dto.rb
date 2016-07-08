@@ -7,11 +7,15 @@ module Fr8
                     :endpoint, :description, :authentication_type
 
       def initialize(
-        id:, name:, label:, version:, endpoint:, description:,
+        id:, name:, label:, version:, endpoint:, description: nil,
         terminal_status: TerminalStatus::ACTIVE,
         authentication_type: AuthenticationType::NONE
       )
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

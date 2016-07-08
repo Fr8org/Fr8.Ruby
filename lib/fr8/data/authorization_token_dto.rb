@@ -9,7 +9,11 @@ module Fr8
       def initialize(
         user_id:, token:, external_account_id:, external_state_token:
       )
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

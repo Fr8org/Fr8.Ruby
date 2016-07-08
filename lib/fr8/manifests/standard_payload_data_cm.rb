@@ -7,12 +7,14 @@ module Fr8
                     :payload_objects
 
       def initialize(name:, object_type:, payload_objects: [])
-        # TODO: test this .merge!
-        method(__method__).parameters.merge!(
-          manifest_type: ManifestType::STANDARD_PAYLOAD_DATA[:type],
-          manifest_id: Manifest::STANDARD_PAYLOAD_DATA[:id]
-        )
-        super(method(__method__).parameters)
+        self.manifest_type = ManifestType::STANDARD_PAYLOAD_DATA[:type]
+        self.manifest_id = Manifest::STANDARD_PAYLOAD_DATA[:id]
+
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

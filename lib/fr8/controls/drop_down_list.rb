@@ -10,10 +10,13 @@ module Fr8
         selected_key:, selected_item:, list_items: [],
         has_refresh_button: false
       )
-        # TODO: test this .merge!
-        method(__method__).parameters[type: ControlType::DROP_DOWN_LIST]
+        self.type = ControlType::DROP_DOWN_LIST
 
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

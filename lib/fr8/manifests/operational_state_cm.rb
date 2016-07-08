@@ -6,12 +6,14 @@ module Fr8
       attr_accessor :manifest_type, :manifest_id, :current_activity_response
 
       def initialize(activity_response:)
-        # TODO: test this .merge!
-        method(__method__).parameters.merge!(
-          manifest_type: ManifestType::OPERATIONAL_STATE[:type],
-          manifest_id: Manifest::OPERATIONAL_STATE[:id]
-        )
-        super(method(__method__).parameters)
+        self.manifest_type = ManifestType::OPERATIONAL_STATE[:type]
+        self.manifest_id = Manifest::OPERATIONAL_STATE[:id]
+
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
 
       def set_success_response!

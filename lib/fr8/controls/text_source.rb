@@ -9,10 +9,13 @@ module Fr8
       def initialize(
         initial_label:, upstream_source_label:, text_value:, value_source:
       )
-        # TODO: test this .merge!
-        method(__method__).parameters[type: ControlType::TEXT_SOURCE]
+        self.type = ControlType::TEXT_SOURCE
 
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

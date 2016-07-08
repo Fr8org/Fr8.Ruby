@@ -14,7 +14,11 @@ module Fr8
         crate_storage: CrateStorageDTO.new, children_activities: [],
         auth_token_id:, auth_token:
       )
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

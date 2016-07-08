@@ -2,11 +2,15 @@
 module Fr8
   module Manifests
     # TODO: Describe this class
-    class Manifest < PropertyInitializer
+    class Manifest
       attr_accessor :manifest_type, :manifest_id
 
       def initialize(manifest_type:, manifest_id:)
-        super(method(__method__).parameters)
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
     end
   end

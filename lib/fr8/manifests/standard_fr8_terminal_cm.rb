@@ -6,12 +6,14 @@ module Fr8
       attr_accessor :manifest_type, :manifest_id, :definition, :activities
 
       def initialize(definition: nil, activities: [])
-        # TODO: test this .merge!
-        method(__method__).parameters.merge!(
-          manifest_type: ManifestType::STANDARD_FR8_TERMINAL[:type],
-          manifest_id: Manifest::STANDARD_FR8_TERMINAL[:id]
-        )
-        super(method(__method__).parameters)
+        self.manifest_type = ManifestType::STANDARD_FR8_TERMINAL[:type]
+        self.manifest_id = ManifestType::STANDARD_FR8_TERMINAL[:id]
+
+        method(__method__).parameters.each do |type, k|
+          next unless type.to_s.starts_with?('key')
+          v = eval(k.to_s)
+          instance_variable_set("@#{k}", v) unless v.nil?
+        end
       end
 
       def set_success_response!
