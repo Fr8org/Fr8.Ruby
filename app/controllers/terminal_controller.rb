@@ -7,13 +7,13 @@ class TerminalController < ApplicationController
   def discover
     web_service = Fr8::Data::WebServiceDTO.new(
       name: 'Trello',
-      icon_path: view_context.image_path('trello-64x64.png')
+      icon_path: view_context.image_url('trello-64x64.png')
     )
     terminal = Fr8::Data::TerminalDTO.new(
       id: '77c60be2-2fb7-43ee-87b8-8bdd0c5136b5',
       name: 'terminalTrello',
       version: '1',
-      endpoint: 'http://terminaltrello.herokuapp.com:80',
+      endpoint: "#{request.protocol}#{request.host_with_port}",
       label: 'Trello Terminal',
       authentication_type: Fr8::Data::AuthenticationType::NONE
     )
