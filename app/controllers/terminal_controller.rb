@@ -23,7 +23,7 @@ class TerminalController < ApplicationController
       version: '1',
       terminal: terminal,
       web_service: web_service,
-      activity_category: Fr8::Data::ActivityCategory::FORWARDERS,
+      category: Fr8::Data::ActivityCategory::FORWARDERS,
       needs_authentication: false,
       label: 'Create Trello Card'
     )
