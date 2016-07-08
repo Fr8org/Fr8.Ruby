@@ -12,5 +12,6 @@ module Fr8Ruby
   # -- all .rb files in that directory are automatically loaded.
   class Application < Rails::Application
     config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/activities"
   end
 end
