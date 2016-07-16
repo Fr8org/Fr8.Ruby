@@ -7,8 +7,8 @@ module Fr8
                     :value_source
 
       def initialize(
-        name:, message_source:, initial_label:, upstream_source_label: nil,
-        text_value: nil, value_source: nil
+        name:, message_source:, initial_label:, label: nil, required: false,
+        upstream_source_label: nil, text_value: nil, value_source: nil
       )
         self.type = ControlType::TEXT_SOURCE
 

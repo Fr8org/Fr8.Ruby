@@ -2,7 +2,7 @@
 module Fr8
   module Controls
     # TODO: Describe this class
-    class ControlDefinitionDTO
+    class ControlDefinitionDTO < CamelizedJSON
       attr_accessor :name, :label, :required, :value, :type, :selected,
                     :events, :source, :is_hidden, :is_collapsed
 

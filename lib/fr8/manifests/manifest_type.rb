@@ -8,10 +8,12 @@ module Fr8
         id: 3
       }.freeze
       KEY_VALUE_LIST = {
-        type: 'Key-Value Pairs List', id: 44
+        type: 'Key-Value Pairs List',
+        id: 44
       }.freeze
       OPERATIONAL_STATE = {
-        type: 'Operational State', id: 27
+        type: 'Operational State',
+        id: 27
       }.freeze
       STANDARD_CONFIGURATION_CONTROLS = {
         type: 'Standard UI Controls',

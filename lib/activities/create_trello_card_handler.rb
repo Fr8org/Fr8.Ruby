@@ -2,32 +2,49 @@
 module Activities
   # TODO: Document
   class CreateTrelloCardHandler
+    include Fr8::Data
+    include Fr8::Manifests
+    include Fr8::Controls
+
     def configure(fr8_json:, fr8_data:)
+      # grab controls crate from data
       controls_crate =
         fr8_data.activity_dto.crate_storage.first_crate_of_type(
-          Fr8::Manifests::ManifestType::STANDARD_CONFIGURATION_CONTROLS
+          ManifestType::STANDARD_CONFIGURATION_CONTROLS
         )
 
-      if controls_crate.nil?
-        message = Fr8::Controls::TextBox.new(
-          name: 'card_name',
-          label: 'Card Name',
-          required: true
-        )
+      unless controls_crate.nil?
+        # TODO: handle subsequent configuration
       end
 
-      controls =
-        Fr8::Manifests::StandardConfigurationControlsCM.new(controls: [message])
-
-      controls_crate = Fr8::Data::CrateDTO.new(
-        manifest_id:
-          Fr8::Manifests::ManifestType::STANDARD_CONFIGURATION_CONTROLS[:id],
-        manifest_type:
-          Fr8::Manifests::ManifestType::STANDARD_CONFIGURATION_CONTROLS[:type],
-        contents: controls
+      # add controls on initial call
+      fr8_data.activity_dto.crate_storage.crates << Fr8::Data::CrateDTO.new(
+        manifest_id: ManifestType::STANDARD_CONFIGURATION_CONTROLS[:id],
+        manifest_type: ManifestType::STANDARD_CONFIGURATION_CONTROLS[:type],
+        contents: StandardConfigurationControlsCM.new(
+          controls: [
+            TextSource.new(
+              name: 'name',
+              label: 'Name',
+              initial_label: 'Name',
+              required: true,
+              message_source: ControlSource.new(
+                manifest_type: ManifestType::FIELD_DESCRIPTION[:type],
+                request_upstream: true
+              )
+            ),
+            TextSource.new(
+              name: 'description',
+              label: 'Description',
+              initial_label: 'Description',
+              message_source: ControlSource.new(
+                manifest_type: ManifestType::FIELD_DESCRIPTION[:type],
+                request_upstream: true
+              )
+            )
+          ]
+        )
       )
-
-      fr8_data.activity_dto.crate_storage.crates << controls_crate
 
       fr8_data.activity_dto
     end
