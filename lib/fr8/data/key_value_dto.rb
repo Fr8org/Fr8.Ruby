@@ -12,6 +12,10 @@ module Fr8
           instance_variable_set("@#{k}", v) unless v.nil?
         end
       end
+
+      def self.from_fr8_json(fr8_json)
+        new(**hash_from_fr8_json(fr8_json))
+      end
     end
   end
 end

@@ -2,12 +2,13 @@
 module Fr8
   module Controls
     # TODO: Describe this class
-    class TextSource < CamelizedJSON
-      attr_accessor :type, :initial_label, :upstream_source_label, :text_value,
+    class TextSource < DropDownList
+      attr_accessor :initial_label, :upstream_source_label, :text_value,
                     :value_source
 
       def initialize(
-        initial_label:, upstream_source_label:, text_value:, value_source:
+        name:, message_source:, initial_label:, upstream_source_label: nil,
+        text_value: nil, value_source: nil
       )
         self.type = ControlType::TEXT_SOURCE
 
@@ -16,6 +17,12 @@ module Fr8
           v = eval(k.to_s)
           instance_variable_set("@#{k}", v) unless v.nil?
         end
+      end
+
+      def self.from_fr8_json(fr8_json)
+        hash = hash_from_fr8_json(fr8_json)
+
+        new(**hash)
       end
     end
   end

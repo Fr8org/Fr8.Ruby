@@ -16,6 +16,17 @@ module Fr8
           instance_variable_set("@#{k}", v) unless v.nil?
         end
       end
+
+      def self.from_fr8_json(fr8_json)
+        defaults = {
+          is_required: false,
+          availability: AvailabilityType::NOTSET,
+          data: {}
+        }
+        hash = defaults.merge(hash_from_fr8_json(fr8_json))
+
+        new(**hash)
+      end
     end
   end
 end

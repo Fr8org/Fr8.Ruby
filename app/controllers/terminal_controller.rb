@@ -1,10 +1,28 @@
 # frozen_string_literal: true
 # TODO: Describe this controller
 class TerminalController < ApplicationController
+  protect_from_forgery(
+    with: :null_session,
+    if: proc { |c| c.request.format == 'application/json' }
+  )
+
   def index
   end
 
   def discover
+    handler = get_vars
+    render json: handler.discover
+  end
+
+  def configure
+    handler = get_vars
+    response = handler.configure(params)
+    render json: response
+  end
+
+  private
+
+  def get_vars
     web_service = Fr8::Data::WebServiceDTO.new(
       name: 'Trello',
       icon_path: view_context.image_url('trello-64x64.png')
@@ -23,7 +41,14 @@ class TerminalController < ApplicationController
       version: '1',
       terminal: terminal,
       web_service: web_service,
-      category: Fr8::Data::ActivityCategory::FORWARDERS,
+      activity_category: Fr8::Data::ActivityCategory::FORWARDERS,
+      categories: [
+        Fr8::Data::ACTIVITY_CATEGORIES[:FORWARDERS],
+        Fr8::Data::ActivityCategoryDTO.new(
+          name: web_service.name,
+          icon_path: web_service.icon_path
+        )
+      ],
       needs_authentication: false,
       label: 'Create Trello Card'
     )
@@ -35,6 +60,6 @@ class TerminalController < ApplicationController
       ]
     )
 
-    render json: handler.discover
+    handler
   end
 end

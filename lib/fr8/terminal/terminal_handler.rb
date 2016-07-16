@@ -49,12 +49,14 @@ module Fr8
       private
 
       def fr8_data_from_params(params, action)
-        fr8_data = Fr8DataDTO.from_request_json(params)
-        activity_handler = activity_store.instantiate_activity_handler(
-          fr8_data.activity.activity_template
+        fr8_data =
+          Fr8::Data::Fr8DataDTO.from_fr8_json(
+            params.except(:terminal, :controller, :action)
+          )
+        activity_handler = activity_store.activity_handler_for(
+          fr8_data.activity_dto.activity_template
         )
-        activity_handler.send(action)
-        fr8_data
+        activity_handler.send(action, fr8_json: params, fr8_data: fr8_data)
       end
     end
   end

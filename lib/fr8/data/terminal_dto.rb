@@ -7,7 +7,7 @@ module Fr8
                     :endpoint, :description, :authentication_type
 
       def initialize(
-        id:, name:, label:, version:, endpoint:, description: nil,
+        name:, label:, version:, endpoint:, id: nil, description: nil,
         terminal_status: TerminalStatus::ACTIVE,
         authentication_type: AuthenticationType::NONE
       )
@@ -16,6 +16,12 @@ module Fr8
           v = eval(k.to_s)
           instance_variable_set("@#{k}", v) unless v.nil?
         end
+      end
+
+      def self.from_fr8_json(fr8_json)
+        hash = hash_from_fr8_json(fr8_json)
+
+        new(hash)
       end
     end
   end

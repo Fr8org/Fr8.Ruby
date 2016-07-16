@@ -5,9 +5,9 @@ module Fr8
     MANIFEST_CM = {
       ManifestType::OPERATIONAL_STATE[:id] =>
         OperationalStateCM,
-      ManifestType::STANDARD_CONFIGURATION_CONTROLS =>
+      ManifestType::STANDARD_CONFIGURATION_CONTROLS[:id] =>
         StandardConfigurationControlsCM,
-      ManifestType::STANDARD_PAYLOAD_DATA =>
+      ManifestType::STANDARD_PAYLOAD_DATA[:id] =>
         StandardPayloadDataCM
     }.freeze
 

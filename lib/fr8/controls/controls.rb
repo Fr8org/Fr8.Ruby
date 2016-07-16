@@ -7,8 +7,10 @@ module Fr8
       ControlType::TEXT_SOURCE => TextSource
     }.freeze
 
-    def extract_control(control_type:, fr8_json:)
-      CONTROL_TYPES[control_type].try(:from_fr8_json, fr8_json)
+    def extract_control(control_fr8_json)
+      control_type = control_fr8_json['type']
+
+      CONTROL_TYPES[control_type].try(:from_fr8_json, control_fr8_json)
     end
   end
 end

@@ -20,6 +20,12 @@ module Fr8
         self.current_activity_response ||=
           ActivityResponseDTO.new(type: 'Success')
       end
+
+      def self.from_fr8_json(fr8_json)
+        ardto = Fr8::Data::ActivityResponseDTO.from_fr8_json(fr8_json)
+
+        new(current_activity_response: ardto)
+      end
     end
   end
 end

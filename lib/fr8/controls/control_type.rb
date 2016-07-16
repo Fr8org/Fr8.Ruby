@@ -5,6 +5,7 @@ module Fr8
     class ControlType
       DROP_DOWN_LIST = 'DropDownList'
       TEXT_SOURCE = 'TextSource'
+      TEXT_BOX = 'TextBox'
     end
   end
 end

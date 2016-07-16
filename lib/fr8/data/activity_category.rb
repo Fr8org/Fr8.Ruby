@@ -9,5 +9,25 @@ module Fr8
       FORWARDERS = 'Forwarders' # 4
       SOLUTION = 'Solution' # 5
     end
+
+    ACTIVITY_CATEGORIES = {
+      MONITORS: ActivityCategoryDTO.new(
+        name: 'Monitor',
+        icon_path: '/Content/icons/monitor-icon-64x64.png'
+      ),
+      RECEIVERS: ActivityCategoryDTO.new(
+        name: 'Get',
+        icon_path: '/Content/icons/get-icon-64x64.png'
+      ),
+      PROCESSORS: ActivityCategoryDTO.new(
+        name: 'Process',
+        icon_path: '/Content/icons/process-icon-64x64.png'
+      ),
+      FORWARDERS: ActivityCategoryDTO.new(
+        name: 'Forward',
+        icon_path: '/Content/icons/forward-icon-64x64.png'
+      ),
+      SOLUTION: ActivityCategoryDTO.new(name: 'Solution')
+    }.freeze
   end
 end

@@ -7,8 +7,8 @@ module Fr8
                     :request_upstream, :availability_type
 
       def initialize(
-        manifest_type:, label:, filter_by_tag:, request_upstream:,
-        availability_type:
+        manifest_type:, request_upstream:,
+        availability_type: nil, label: nil, filter_by_tag: nil
       )
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')

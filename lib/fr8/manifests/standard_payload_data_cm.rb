@@ -16,6 +16,17 @@ module Fr8
           instance_variable_set("@#{k}", v) unless v.nil?
         end
       end
+
+      def self.from_fr8_json(fr8_json)
+        hash = hash_from_fr8_json(fr8_json)
+
+        hash[:payload_objects] ||= []
+        hash[:payload_objects].map! do |po|
+          Fr8::Data::PayloadObjectDTO.fro_fr8_json(po)
+        end
+
+        new(**hash)
+      end
     end
   end
 end

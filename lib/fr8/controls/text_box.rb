@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 module Fr8
-  module Data
+  module Controls
     # TODO: Describe this class
-    class PayloadObjectDTO < CamelizedJSONCapitalized
-      attr_accessor :payload_object
+    class TextBox < ControlDefinitionDTO
+      def initialize(
+        name:, label:, events: [], required: false, selected: false, value: nil
+      )
+        self.type = ControlType::TEXT_BOX
 
-      def initialize(payload_object: [])
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
           v = eval(k.to_s)
@@ -13,11 +15,8 @@ module Fr8
         end
       end
 
-      def from_fr8_json(fr8_json)
+      def self.from_fr8_json(fr8_json)
         hash = hash_from_fr8_json(fr8_json)
-
-        hash[:payload_object] ||= []
-        hash[:payload_object].map! { |kv| KeyValueDTO.from_fr8_json(kv) }
 
         new(**hash)
       end

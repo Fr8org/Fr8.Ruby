@@ -15,7 +15,6 @@ module Fr8
           v = eval(k.to_s)
           instance_variable_set("@#{k}", v) unless v.nil?
         end
-
       end
     end
   end

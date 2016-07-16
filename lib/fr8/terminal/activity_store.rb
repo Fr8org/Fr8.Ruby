@@ -19,8 +19,9 @@ module Fr8
         activity_handlers[key] = activity_handler
       end
 
-      def instantiate_activity_handler(activity_template:)
-        activity_handlers[generate_key(activity_template)].new
+      def activity_handler_for(activity_template)
+        key = generate_key(activity_template)
+        activity_handlers[key]
       end
 
       def activity_templates_arr
