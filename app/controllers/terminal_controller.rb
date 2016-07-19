@@ -33,7 +33,7 @@ class TerminalController < ApplicationController
       version: '1',
       endpoint: "#{request.protocol}#{request.host_with_port}",
       label: 'Trello Terminal',
-      authentication_type: Fr8::Data::AuthenticationType::NONE
+      authentication_type: Fr8::Data::AuthenticationType::EXTERNAL
     )
     create_trello_card = Fr8::Data::ActivityTemplateDTO.new(
       id: '57603b35-559b-417a-9310-ff00fca680af',
