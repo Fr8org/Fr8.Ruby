@@ -16,8 +16,17 @@ class TerminalController < ApplicationController
 
   def configure
     handler = get_vars
-    response = handler.configure(params)
-    render json: response
+    render json: handler.configure(params)
+  end
+
+  def request_url
+    handler = get_vars
+    render json: handler.request_url(params)
+  end
+
+  def token
+    handler = get_vars
+    render json: handler.token(params)
   end
 
   private
@@ -37,7 +46,7 @@ class TerminalController < ApplicationController
     )
     create_trello_card = Fr8::Data::ActivityTemplateDTO.new(
       id: '57603b35-559b-417a-9310-ff00fca680af',
-      name: 'create_trello_card',
+      name: 'create_trello_card_secure',
       version: '1',
       terminal: terminal,
       web_service: web_service,
@@ -49,7 +58,7 @@ class TerminalController < ApplicationController
           icon_path: web_service.icon_path
         )
       ],
-      needs_authentication: false,
+      needs_authentication: true,
       label: 'Create Trello Card'
     )
     create_trello_card_handler = Activities::CreateTrelloCardHandler.new

@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'trello'
+
 module Fr8
   module Terminal
     # TODO: Document
@@ -38,6 +40,71 @@ module Fr8
         fr8_data_from_params(params, :configure)
       end
 
+      def request_url(*)
+        # Create a new OAuth consumer to make the request to the oauth API
+        # with the correct request token path, access token path, and
+        # authorize path.
+
+        consumer = get_oauth_consumer
+
+        callback_url = 'http://dev.fr8.co/AuthenticationCallback/' \
+          'ProcessSuccessfulOAuthResponse?' \
+          'terminalName=terminalTrello&terminalVersion=1'
+
+        authorize_url = URI::HTTPS.build(
+          host: 'trello.com',
+          path: '/1/authorize',
+          query: {
+            callback_method: 'fragment',
+            return_url: callback_url,
+            scope: 'read,write',
+            expiration: 'never',
+            name: 'Fr8 Trello Terminal',
+            key: ENV['TRELLO_API_KEY']
+          }.to_query
+        ).to_s
+
+        request_token = consumer.get_request_token(
+          oauth_callback: callback_url
+        )
+
+        Fr8::Data::ExternalAuthUrlDTO.new(
+          state_token: ENV['TRELLO_API_KEY'],
+          url: authorize_url
+        )
+      end
+
+      def token(params)
+        external_token_dto =
+          Fr8::Data::ExternalAuthenticationDTO.from_fr8_json(
+            params.except(:terminal, :controller, :action)
+          )
+
+        oauth_token = external_token_dto.parameters['oauth_token']
+        oauth_secret = external_token_dto.parameters['oauth_verifier']
+
+        # consumer = get_oauth_consumer
+        # oauth_hash = {
+        #   oauth_token: oauth_token,
+        #   oauth_token_secret: oauth_secret
+        # }
+        #
+        # request_token = OAuth::RequestToken.from_hash(consumer, oauth_hash)
+
+        ::Trello.configure do |config|
+          config.consumer_key = ENV['TRELLO_API_KEY']
+          config.consumer_secret = ENV['TRELLO_API_SECRET']
+          config.oauth_token = oauth_token
+          config.oauth_token_secret = oauth_secret
+        end
+
+        Fr8::Data::AuthorizationTokenDTO.new(
+          token: oauth_secret,
+          external_state_token: oauth_token,
+          external_account_id: nil
+        )
+      end
+
       def activate(params)
         fr8_data_from_params(params, :activate)
       end
@@ -47,6 +114,18 @@ module Fr8
       end
 
       private
+
+      def get_oauth_consumer
+        OAuth::Consumer.new(
+          ENV['TRELLO_API_KEY'],
+          ENV['TRELLO_API_SECRET'],
+          site: 'https://trello.com',
+          request_token_path: '/1/OAuthGetRequestToken',
+          access_token_path: '/1/OAuthGetAccessToken',
+          authorize_path: '/1/OAuthAuthorizeToken',
+          name: 'Fr8 Trello Ruby Terminal'
+        )
+      end
 
       def fr8_data_from_params(params, action)
         fr8_data =
