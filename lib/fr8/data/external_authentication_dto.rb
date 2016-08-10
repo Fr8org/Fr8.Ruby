@@ -2,15 +2,24 @@
 module Fr8
   module Data
     # TODO: Describe this class
-    class ExternalAuthenticationDTO
-      attr_accessor :user_id, :parameters
+    class ExternalAuthenticationDTO < CamelizedJSONCapitalized
+      attr_accessor :fr8_user_id, :parameters
 
-      def initialize(user_id:, parameters:)
+      def initialize(fr8_user_id:, parameters:)
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
           v = eval(k.to_s)
           instance_variable_set("@#{k}", v) unless v.nil?
         end
+      end
+
+      def self.from_fr8_json(fr8_json)
+        hash = hash_from_fr8_json(fr8_json)
+        hash[:parameters] = Rack::Utils.parse_nested_query(
+          hash.delete(:request_query_string)
+        )
+
+        new(**hash)
       end
     end
   end

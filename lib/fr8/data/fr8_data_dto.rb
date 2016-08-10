@@ -5,7 +5,7 @@ module Fr8
     class Fr8DataDTO < CamelizedJSONCapitalized
       attr_accessor :activity_dto, :container_id, :explicit_data
 
-      def initialize(container_id:, activity_dto: nil, explicit_data: nil)
+      def initialize(container_id: nil, activity_dto: nil, explicit_data: nil)
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
           v = eval(k.to_s)
@@ -15,7 +15,9 @@ module Fr8
 
       def self.from_fr8_json(fr8_json)
         hash = hash_from_fr8_json(fr8_json)
-        hash[:activity_dto] = ActivityDTO.from_fr8_json(hash[:activity_dto])
+        unless hash[:activity_dto].nil?
+          hash[:activity_dto] = ActivityDTO.from_fr8_json(hash[:activity_dto])
+        end
 
         new(hash)
       end
