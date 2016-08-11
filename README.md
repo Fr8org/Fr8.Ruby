@@ -23,7 +23,7 @@ Join the discussion here in the Issues list and in the #fr8dev-ruby channel on t
 
 3) Clone this repo.
 
-4) Choose a [development approach](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/DevelopmentGuides/ChoosingADevelopmentApproach.md).  The Fr8 service at fr8.co uses Heroku to deploy production and dev Java Terminals.  
+4) Choose a [development approach](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/DevelopmentGuides/ChoosingADevelopmentApproach.md).  The Fr8 service at fr8.co uses Heroku to deploy production and dev Ruby Terminals.  
 
 
 Ruby Code uses https://github.com/bbatsov/ruby-style-guide as its style guide, checked by Rubocop.
