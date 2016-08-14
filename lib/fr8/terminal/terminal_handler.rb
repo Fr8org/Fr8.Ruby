@@ -83,8 +83,8 @@ module Fr8
         me = ::Trello::Member.find('me')
 
         result = Fr8::Data::AuthorizationTokenDTO.new(
-          token: oauth_token,
-          external_state_token: oauth_verifier,
+          token: access_token.as_json,
+          external_state_token: request_token.token,
           external_account_id: me.username
         )
 
