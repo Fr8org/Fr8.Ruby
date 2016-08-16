@@ -41,3 +41,64 @@ Ruby Code uses https://github.com/bbatsov/ruby-style-guide as its style guide, c
 - RVM `\curl -sSL https://get.rvm.io | bash -s stable --ruby`
 - Homebrew `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 - PostgreSQL `brew install postgresql`
+
+# Current SDK Status
+## Supported Features:
+- Core DTOs for performing activity discovering, external authentication, configuration, activation, deactivation and running;
+- Serializers and deserializers for core DTOs;
+- Core controls:
+  - Configuration
+  - DropDownList
+  - TextSource
+  - TextBox
+- Core manifests:
+  - OperationalStateCM
+  - StandardConfigurationControlsCM
+  - StandardPayloadDataCM
+  - StandardFr8TerminalCM
+- Core Terminal-to-Hub communication mechanisms:
+  - HMAC authentication support
+  - External authentication support
+  - Container payload retrieving
+
+# SDK Development Roadmap
+### Development plan for nearest future:
+- Separate `lib/fr8` into a separate repository and transform it into a gem
+- Add support for generating boilerplate controllers for terminals using Rails
+- Add support for Sinatra and Hanami frameworks
+
+# SDK Features
+## SDK Modules
+- **Fr8::Controls**
+
+	Package contains controls classes and their serializers/deserializers.
+
+- **Fr8::Data**
+
+	Package contains core DTO classes and their serializers/deserializers.
+
+- **Fr8::Manifests**
+
+	Package contains core Crate Manifest (CM) classes and their serializers/deserializers.
+
+- **Fr8::Terminal**
+
+	Package contains TerminalHandler and ActivityStore classes. TerminalHandler should be instantiated once for whole terminal application. User usually should not instantiate ActivityStore class manually, as it is instantiated by default by TerminalHandler. More examples on TerminalHandler and ActivityStore are listed below in "Twitter terminal sample" section.
+
+- **Fr8::Utility**
+
+	Package contains classes and functions for SDK internal use.
+
+## SDK Classes
+- **Fr8::Hub**
+
+	Package contains utility classes to provide Terminal-To-Hub communication. Usually user should not instantiate these classes manually, instances of these classes are provided to configure and run activy handlers.
+
+# Trello Terminal Sample
+
+We're providing Trello Terminal sample Rails app to show how to use Fr8 Ruby SDK to build a Fr8 Terminal.
+
+All of the Terminal specific code and logic is contained inside of the following files:
+-- **config/routes.rb** - Defines a minimum required set of routes for any Fr8 Terminal: `/discover`, `/activities/configure`, `activities/run`, `/authentication/request_url`, and `/authentication/token`; as well as `/` that renders a simple HTML page with our Terminal introduction (standard practice among Fr8 Terminal Developers).
+-- **app/controllers/terminal_controller.rb** - Processes all of the endpoints defined in `config/routes.rb` as well as a terminal configuration.
+-- **lib/fr8/terminal/terminal_handler.rb** - Defines logic for all of the endpoints processed by `TerminalController` as well as internal helpers for deserializing data sent by the Hub.
