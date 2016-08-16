@@ -6,7 +6,7 @@ These Ruby-based Fr8 Terminals work with the [Fr8 ecosystem](http://www.fr8.co).
 
 Fr8 Terminals communicate with Fr8 Hubs using RESTful endpoints, Http, and JSON. The SDK portion of this repository provides tools to make it easier for Terminals to be created and to keep things DRY. For example, there are object mapper classes that allow Ruby developers to avoid having to personally deal with the serialization and deserialization of Ruby objects into JSON.
 
-The Ruby SDK services are admittedly in an early stage of development. (To get a sense of the roadmap, you may want to look at the more mature [.NET SDK](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/SDK/.NET/Home.md))
+The Ruby SDK services are in an early stage of development. (To get a sense of the roadmap, you may want to look at the more mature [.NET SDK](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/SDK/.NET/Home.md)) More specifically, right now the framework is  inside the `lib` folder. Our next step is to separate the framework code and put it in a standalone gem that will be server framework agnostic; and then separately create a rails starter project / gem with proper initializers that can generate boilerplate controllers.
 
 
 Currently, this repository contains a single Terminal, the Fr8 Trello Terminal. This Terminal exposes useful Trello services to Fr8 Plans via a set of Activities.
