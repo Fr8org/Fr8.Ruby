@@ -2,7 +2,7 @@
 
 # Fr8 Ruby SDK and Terminals
 
-These Ruby-based Fr8 Terminals work with the [Fr8 ecosystem](http://www.fr8.co). Fr8 is an open source cloud based integration platform ([iPaaS](https://en.wikipedia.org/wiki/Cloud-based_integration)).
+These Ruby-based Fr8 Terminals work with the [Fr8 ecosystem](http://www.fr8.co). Fr8 is an open source cloud based integration platform ([iPaaS](https://en.wikipedia.org/wiki/Cloud-based_integration)). Fr8 makes it easy to hook SaaS services together and build applications without writing code. It can implement business and personal workflows, running on full automatic or upon request.
 
 Fr8 Terminals communicate with Fr8 Hubs using RESTful endpoints, Http, and JSON. The SDK portion of this repository provides tools to make it easier for Terminals to be created and to keep things DRY. For example, there are object mapper classes that allow Ruby developers to avoid having to personally deal with the serialization and deserialization of Ruby objects into JSON.
 
