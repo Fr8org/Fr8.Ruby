@@ -40,25 +40,27 @@ module Fr8
         fr8_data_from_params(params, :configure)
       end
 
-      def request_url(*)
+      def request_url(request)
         # Create a new OAuth consumer to make the request to the oauth API
         # with the correct request token path, access token path, and
         # authorize path.
 
         consumer = new_oauth_consumer
 
+        hub_url = request.headers['FR8HUBCALLBACKURL']
         request_token =
-          consumer.get_request_token(oauth_callback: callback_url)
+          consumer.get_request_token(oauth_callback: callback_url(hub_url))
         params =
           { scope: 'read,write,account', name: 'Fr8 Trello Ruby Terminal' }
 
+        puts("request_token in request_url: #{request_token.token}")
         Fr8::Data::ExternalAuthUrlDTO.new(
-          state_token: request_token.token,
+          external_state_token: request_token.token,
           url: "#{request_token.authorize_url}&#{params.to_query}"
         )
       end
 
-      def token(params)
+      def token(params, request)
         external_token_dto =
           Fr8::Data::ExternalAuthenticationDTO.from_fr8_json(
             params.except(:terminal, :controller, :action)
@@ -68,8 +70,9 @@ module Fr8
         oauth_verifier = external_token_dto.parameters['oauth_verifier']
 
         consumer = new_oauth_consumer
+        hub_url = request.headers['FR8HUBCALLBACKURL']
         request_token =
-          consumer.get_request_token(oauth_callback: callback_url)
+          consumer.get_request_token(oauth_callback: callback_url(hub_url))
         access_token =
           request_token.get_access_token(oauth_verifier: oauth_verifier)
 
@@ -82,9 +85,10 @@ module Fr8
 
         me = ::Trello::Member.find('me')
 
+        puts("request_token in token: #{oauth_token}")
         result = Fr8::Data::AuthorizationTokenDTO.new(
-          token: access_token.as_json,
-          external_state_token: request_token.token,
+          token: access_token.to_json,
+          external_state_token: oauth_token,
           external_account_id: me.username
         )
 
@@ -103,9 +107,8 @@ module Fr8
 
       private
 
-      def callback_url
-        'http://dev.fr8.co/AuthenticationCallback/' \
-          'ProcessSuccessfulOAuthResponse?' \
+      def callback_url(hub_url)
+        "#{hub_url}/AuthenticationCallback/ProcessSuccessfulOAuthResponse?" \
           'terminalName=terminalTrello&terminalVersion=1'
       end
 

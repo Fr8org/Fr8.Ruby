@@ -21,12 +21,12 @@ class TerminalController < ApplicationController
 
   def request_url
     handler = get_vars
-    render json: handler.request_url(params)
+    render json: handler.request_url(request)
   end
 
   def token
     handler = get_vars
-    render json: handler.token(params)
+    render json: handler.token(params, request)
   end
 
   private
