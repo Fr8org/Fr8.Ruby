@@ -6,7 +6,7 @@ module Fr8
       MONITORS = 'Monitors' # 1
       RECEIVERS = 'Receivers' # 2
       PROCESSORS = 'Processors' # 3
-      FORWARDERS = 'Forwarders' # 4
+      SHIP_DATA = 'Ship Data' # 4
       SOLUTION = 'Solution' # 5
     end
 
@@ -23,8 +23,8 @@ module Fr8
         name: 'Process',
         icon_path: '/Content/icons/process-icon-64x64.png'
       ),
-      FORWARDERS: ActivityCategoryDTO.new(
-        name: 'Forward',
+      SHIP_DATA: ActivityCategoryDTO.new(
+        name: 'Ship Data',
         icon_path: '/Content/icons/forward-icon-64x64.png'
       ),
       SOLUTION: ActivityCategoryDTO.new(name: 'Solution')

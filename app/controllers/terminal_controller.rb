@@ -50,9 +50,9 @@ class TerminalController < ApplicationController
       version: '1',
       terminal: terminal,
       web_service: web_service,
-      activity_category: Fr8::Data::ActivityCategory::FORWARDERS,
+      activity_category: Fr8::Data::ActivityCategory::SHIP_DATA,
       categories: [
-        Fr8::Data::ACTIVITY_CATEGORIES[:FORWARDERS],
+        Fr8::Data::ACTIVITY_CATEGORIES[:SHIP_DATA],
         Fr8::Data::ActivityCategoryDTO.new(
           name: web_service.name,
           icon_path: web_service.icon_path
