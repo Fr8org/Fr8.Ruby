@@ -3,9 +3,9 @@ module Fr8
   module Data
     # TODO: Describe this class
     class ExternalAuthUrlDTO < CamelizedJSONCapitalized
-      attr_accessor :state_token, :url
+      attr_accessor :external_state_token, :url
 
-      def initialize(state_token:, url:)
+      def initialize(external_state_token:, url:)
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
           v = eval(k.to_s)
