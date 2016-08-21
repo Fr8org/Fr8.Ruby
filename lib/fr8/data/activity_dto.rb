@@ -6,12 +6,12 @@ module Fr8
       attr_accessor :name, :label, :activity_template, :root_plan_node_id,
                     :parent_plan_node_id, :current_view, :ordering, :id,
                     :crate_storage, :children_activities, :auth_token_id,
-                    :auth_token, :documentation
+                    :auth_token, :documentation, :plan_id
 
       def initialize(
-        name:, label:, activity_template:, root_plan_node_id:,
-        parent_plan_node_id:, current_view:, ordering:, id:,
-        auth_token_id:, auth_token:, documentation: nil,
+        label:, activity_template:, parent_plan_node_id:,
+        root_plan_node_id: nil,name: nil, current_view: nil, ordering:, id:,
+        auth_token_id:, auth_token:, documentation: nil, plan_id: nil,
         crate_storage: CrateStorageDTO.new, children_activities: []
       )
         method(__method__).parameters.each do |type, k|

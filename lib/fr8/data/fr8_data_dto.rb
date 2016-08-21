@@ -3,9 +3,12 @@ module Fr8
   module Data
     # TODO: Describe this class
     class Fr8DataDTO < CamelizedJSONCapitalized
-      attr_accessor :activity_dto, :container_id, :explicit_data
+      attr_accessor :activity_dto, :container_id, :explicit_data, :termial
 
-      def initialize(container_id: nil, activity_dto: nil, explicit_data: nil)
+      def initialize(
+        container_id: nil, activity_dto: nil, explicit_data: nil,
+        terminal: nil
+      )
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
           v = eval(k.to_s)

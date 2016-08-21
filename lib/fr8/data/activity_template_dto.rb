@@ -5,12 +5,14 @@ module Fr8
     class ActivityTemplateDTO < CamelizedJSON
       attr_accessor :id, :name, :version, :terminal, :web_service,
                     :activity_category, :needs_authentication, :label, :type,
-                    :min_pane_width, :categories
+                    :min_pane_width, :categories, :terminal_name,
+                    :terminal_version
 
       def initialize(
-        id:, name:, version:, terminal:, web_service:, activity_category: nil,
-        categories: [], needs_authentication: false, label: '', tags: nil,
-        type: ActivityType::STANDARD, min_pane_width: 380
+        name:, version:, id: nil, terminal: nil, web_service: nil,
+        activity_category: nil, categories: [], needs_authentication: false,
+        label: '', tags: nil, type: ActivityType::STANDARD,
+        min_pane_width: 380, terminal_name: nil, terminal_version: nil
       )
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
