@@ -5,12 +5,14 @@ module Fr8
     class CrateDTO < CamelizedJSON
       attr_accessor :manifest_type, :manifest_id, :manifest_registrar,
                     :id, :label, :contents, :parent_crate_id,
-                    :create_time, :availability_type
+                    :create_time, :availability_type, :manufacturer,
+                    :source_activity_id
 
       def initialize(
         manifest_type:, manifest_id:, contents:, id: SecureRandom.uuid,
         manifest_registrar: nil, label: nil, parent_crate_id: nil,
-        create_time: nil, availability_type: AvailabilityType::NOTSET
+        create_time: nil, manufacturer: nil, source_activity_id: nil,
+        availability_type: AvailabilityType::NOTSET
       )
         method(__method__).parameters.each do |type, k|
           next unless type.to_s.starts_with?('key')
