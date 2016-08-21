@@ -53,7 +53,6 @@ module Fr8
         params =
           { scope: 'read,write,account', name: 'Fr8 Trello Ruby Terminal' }
 
-        puts("request_token in request_url: #{request_token.token}")
         Fr8::Data::ExternalAuthUrlDTO.new(
           external_state_token: request_token.token,
           url: "#{request_token.authorize_url}&#{params.to_query}"
@@ -85,14 +84,11 @@ module Fr8
 
         me = ::Trello::Member.find('me')
 
-        puts("request_token in token: #{oauth_token}")
         result = Fr8::Data::AuthorizationTokenDTO.new(
           token: access_token.to_json,
           external_state_token: oauth_token,
           external_account_id: me.username
         )
-
-        puts(result.as_json)
 
         result
       end

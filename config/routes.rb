@@ -9,5 +9,9 @@ Rails.application.routes.draw do
 
   post '/authentication/token', to: 'terminal#token'
 
+  post '/activities/activate', to: 'terminal#activate'
+
+  post '/activities/deactivate', to: 'terminal#deactivate'
+
   root 'terminal#index'
 end

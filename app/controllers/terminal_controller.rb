@@ -9,6 +9,14 @@ class TerminalController < ApplicationController
   def index
   end
 
+  def activate
+    ''
+  end
+
+  def deactivate
+    ''
+  end
+
   def discover
     handler = get_vars
     render json: handler.discover
